@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class MoveCube : MonoBehaviour
 {
     public float speed = 1f;
-    public float x;
-    public float y;
 
+    public List<Color> ballColors = new List<Color>();
+    public int index = 0;
     private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,39 @@ public class MoveCube : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene(2);//go to scene Minigame2  when green cube and the red blockers hit together 
+        if (other.gameObject.CompareTag("ball"))
+        {
+            speed++; //increase player speed if you get a ball
+            
+            //color rotating logic
+            Material ballMat = other.gameObject.GetComponent<Renderer>().material;
+            ballMat.color = ballColors[index];
+            Debug.Log("hitting ball");
+            if (index < ballColors.Count-1)
+            {
+                index++;
+            }
+            else
+            {
+                index = 0;
+            }
+
+            float randX = Random.Range(-28.5f,16f);
+            other.gameObject.transform.position = new Vector3(
+                randX,
+                other.transform.position.y,
+                other.transform.position.z);
+
+
+        }
+
+        if (other.gameObject.CompareTag("blocker"))
+        {
+            SceneManager.LoadScene(2); //go to EndGame scene when green cube and the red blockers hit together 
+        }
+        
+        
     }
+
+
 }

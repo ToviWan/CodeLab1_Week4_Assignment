@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour//make the audio clip stay playing
         set
         {
             userName = value;
-            PlayerPrefs.SetString ("playerName", userName);
+            PlayerPrefs.SetString ("playerName", userName);//set the default username
         }
     }
     
@@ -66,8 +66,5 @@ public class GameManager : MonoBehaviour//make the audio clip stay playing
             Debug.Log("Return key was pressed.");
         }
         
-        //audioSource.pitch = newSpeed;
-        //audioSource.outputAudioMixerGroup.audioMixer.SetFloat("Pitch", 1f / newSpeed);
-        //i want to make the audio's tempo go faster as time goes but failed ToT
     }
 }
